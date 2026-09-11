@@ -33,8 +33,13 @@ if analyze_btn:
                 st.session_state["analysis_result"] = result
                 st.session_state["resume_text"] = raw_text
             except Exception as e:
-                st.error(f"Analysis failed: {str(e)}")
-
+                error_msg = str(e)
+                if "503" in error_msg or "UNAVAILABLE" in error_msg:
+                    st.warning("⚠️ The AI model is currently experiencing high demand. Please wait a few moments and click 'Analyze Resume' again.")
+                elif "429" in error_msg or "exhausted" in error_msg.lower():
+                    st.warning("⚠️ Free-tier API rate limit exceeded. Please wait a minute before trying again.")
+                else:
+                    st.error(f"Analysis failed: {error_msg}")
 with col_right:
     st.subheader("Analysis & Recommendations")
     if "analysis_result" in st.session_state:
