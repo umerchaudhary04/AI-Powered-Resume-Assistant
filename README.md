@@ -2,7 +2,7 @@
 
 AI Resume Assistant is a Streamlit-based web application designed to help job seekers improve their resumes through transparent, criteria-based AI evaluation. Instead of opaque "AI rewrites," this tool scores resumes against the established Harvard College Office of Career Services resume guide and generates specific, actionable improvements.
 
-[![Live Demo](https://img.shields.io/badge/Live_Demo-Streamlit-FF4B4B?style=for-the-badge&logo=streamlit)]([https://your-app-link.streamlit.app/](https://umerchaudhary04-ai-powered-resume-assistant-app-dba8gm.streamlit.app/))
+[![Live Demo](https://img.shields.io/badge/Live_Demo-Streamlit-FF4B4B?style=for-the-badge&logo=streamlit)](https://umerchaudhary04-ai-powered-resume-assistant-app-dba8gm.streamlit.app/)
 
 ## Core Features
 
