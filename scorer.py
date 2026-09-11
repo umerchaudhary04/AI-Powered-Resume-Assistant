@@ -1,3 +1,4 @@
+import time
 import json
 from google import genai
 from google.genai import types
@@ -34,20 +35,28 @@ Never invent metrics or facts. When improving bullet points, use bracketed place
 
 def analyze_resume(api_key: str, resume_text: str, job_description: str = "") -> ResumeAnalysisResult:
     client = genai.Client(api_key=api_key)
-    
-    prompt = f"Resume Content:\n{resume_text}\n"
+    prompt = f"Resume:\n{resume_text}\n"
     if job_description.strip():
-        prompt += f"\nTarget Job Description:\n{job_description}\n"
-        prompt += "\nEvaluate relevance to the target job description and extract missing keywords/skills."
+        prompt += f"\nJob Description:\n{job_description}\nExtract missing keywords."
 
-    response = client.models.generate_content(
-        model="gemini-3.5-flash",
-        contents=prompt,
-        config=types.GenerateContentConfig(
-            system_instruction=SYSTEM_PROMPT,
-            response_mime_type="application/json",
-            response_schema=ResumeAnalysisResult,
-            temperature=0.2,
-        ),
-    )
-    return ResumeAnalysisResult.model_validate_json(response.text)
+    max_retries = 3
+    for attempt in range(max_retries):
+        try:
+            response = client.models.generate_content(
+                model="gemini-2.5-flash",
+                contents=prompt,
+                config=types.GenerateContentConfig(
+                    system_instruction=SYSTEM_PROMPT,
+                    response_mime_type="application/json",
+                    response_schema=ResumeAnalysisResult,
+                    temperature=0.2,
+                ),
+            )
+            return ResumeAnalysisResult.model_validate_json(response.text)
+        except Exception as e:
+            # If it's a 503 error and we haven't reached the max retries, wait and try again
+            if "503" in str(e) and attempt < max_retries - 1:
+                time.sleep(2 ** attempt)  # Sleeps for 1s, then 2s
+                continue
+            # Otherwise, raise the error to be caught by app.py
+            raise e
