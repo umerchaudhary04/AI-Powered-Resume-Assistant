@@ -53,5 +53,6 @@ streamlit run app.py
 
 This MVP is designed specifically for early-career job seekers and university students[cite: 1]. It intentionally excludes out-of-scope features such as job application tracking, cover letter generation, and visual template design[cite: 1]. To protect user privacy, uploaded files and extracted text are processed entirely in-memory and are not persisted beyond the active session[cite: 1].
 
-**Owner:** Umer Asghar
+**Owner:** Umer Asghar 
 **Version:** 1.0 (MVP)
+[![Live Demo](https://img.shields.io/badge/Live_Demo-Streamlit-FF4B4B?style=for-the-badge&logo=streamlit)]([https://your-app-link.streamlit.app/](https://umerchaudhary04-ai-powered-resume-assistant-app-dba8gm.streamlit.app/))
